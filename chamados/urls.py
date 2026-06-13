@@ -1,5 +1,6 @@
 from django.urls import include, path
 from . import views
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('', views.lista_chamados, name='home'),
@@ -10,4 +11,5 @@ urlpatterns = [
     path('cadastro/', views.cadastrar_usuario, name='cadastrar_usuario'),
     path('sobre/', views.pagina_sobre, name='sobre'),
     path('contato/', views.pagina_contato, name='contato'),
+    path('', RedirectView.as_view(url='/chamados/', permanent=True))
 ]

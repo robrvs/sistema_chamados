@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -122,3 +123,5 @@ LOGIN_URL = 'login'               # Rota padrão caso alguém tente acessar sem 
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

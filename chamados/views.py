@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import login_required
+from django.http.response import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import modelform_factory
 from .models import Chamado
@@ -8,12 +8,6 @@ from .models import Chamado
 ChamadoForm = modelform_factory(Chamado, fields=['servidor_nome', 'setor', 'categoria', 'prioridade', 'descricao'])
 StatusForm = modelform_factory(Chamado, fields=['status', 'observacao_tecnica'])
 
-# def lista_chamados(request):
-#     chamados = Chamado.objects.all()
-#     filtro_status = request.GET.get('status')
-#     if filtro_status:
-#         chamados = chamados.filter(status=filtro_status)
-#     return render(request, 'chamados/lista.html', {'chamados': chamados, 'filtro_status': filtro_status})
 @login_required
 def lista_chamados(request):
     chamados = Chamado.objects.all()
@@ -51,7 +45,7 @@ def novo_chamado(request):
             return redirect('home')  # <-- Alterado aqui de 'lista_chamados' para 'home'
     else:
         form = ChamadoForm()
-    return render(request, 'chamados/novo.html', {'form': form, 'titulo': 'Abrir Novo Chamado'})
+    return render(request, 'chamados/novo.html', {'form': form, 'titulo': 'Abrir Chamado'})
 
 def atualizar_chamado(request, pk):
     chamado = get_object_or_404(Chamado, pk=pk)
@@ -82,8 +76,8 @@ def cadastrar_usuario(request):
         form = UserCreationForm()
     return render(request, 'registration/cadastro.html', {'form': form, 'titulo': 'Cadastro de Novo Usuário'})
 
-def pagina_sobre(request):
-    return render(request, 'chamados/sobre.html')
+def pagina_sobre(request):    
+     return render(request, 'chamados/sobre.html')
 
 def pagina_contato(request):
-    return render(request, 'chamados/contato.html')
+     return render(request, 'chamados/contato.html')

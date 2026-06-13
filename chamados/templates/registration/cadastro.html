@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block aba %}Criar Conta{% endblock %}
+
+{% block conteudo %}
+<div class="container mt-5" style="max-width: 450px;">
+    <div class="card shadow">
+        <div class="card-header text-white text-center" style="background-color: #008000;">
+            <h3 class="card-title h5 mb-0">📝 Cadastro de Usuário</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label fw-bold">
+                        {% if field.label == "Username" %}
+                            Nome de usuário
+                        {% elif field.label == "Password" %}
+                            Senha
+                        {% elif field.label == "Password confirmation" %}
+                            Confirmação de senha
+                        {% else %}
+                            {{ field.label }}
+                        {% endif %}
+                    </label>
+                    
+                    <div class="form-control-container">
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var el = document.getElementsByName("{{ field.name }}")[0];
+                                if (el) el.classList.add("form-control");
+                            });
+                        </script>
+                        {{ field }}
+                        
+                        {% if field.help_text %}
+                            <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">
+                                {% if "Required. 150 characters or fewer." in field.help_text %}
+                                    Obrigatório. 150 caracteres ou menos. Letras, números e os caracteres @/./+/-/_ apenas.
+                                {% elif "Your password can’t be too similar to your other personal information." in field.help_text %}
+                                    A sua senha não pode ser muito parecida com as suas outras informações pessoais.<br>
+                                    A sua senha deve conter pelo menos 8 caracteres.<br>
+                                    A sua senha não pode ser uma senha comum.<br>
+                                    A sua senha não pode ser inteiramente numérica.
+                                {% elif "Enter the same password as before, for verification." in field.help_text %}
+                                    Digite a mesma senha de antes para verificação.
+                                {% else %}
+                                    {{ field.help_text }}
+                                {% endif %}
+                            </small>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-success w-100 fw-bold mt-3">Confirmar Cadastro</button>
+            </form>
+            <div class="text-center mt-3">
+                <a href="{% url 'login' %}" class="small text-decoration-none text-success">Já tem uma conta? Voltar ao login</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block aba %}
+        Suporte TI
+      {% endblock %}
+    </title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <style>
+      body {
+        min-height: 100vh;
+        padding-bottom: 100px;
+        position: relative;
+      }
+      footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #008000;">
+      <div class="container px-5">
+        <a class="navbar-brand" href="{% url 'home' %}">🏛️ HelpDesker TI - IPAM</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <span class="nav-link text-light me-3">Olá, <strong>{{ user.username }}</strong></span>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Painel de OS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link me-2" href="{% url 'novo_chamado' %}">Abrir Chamado</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link me-2" href="{% url 'sobre' %}">Sobre</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link me-2" href="{% url 'contato' %}">Contato</a>
+              </li>
+              <li class="nav-item d-flex align-items-center">
+                <form action="{% url 'logout' %}" method="post" class="d-inline-block m-0 p-0">
+                  {% csrf_token %}
+                  <button type="submit" class="nav-link btn btn-link text-start p-0 m-0 align-baseline" style="text-decoration: none; border: none; background: none;">Sair</button>
+                </form>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link me-2" href="{% url 'sobre' %}">Sobre</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link me-2" href="{% url 'contato' %}">Contato</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link btn btn-outline-light btn-sm px-3" href="{% url 'login' %}">Acessar</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container px-5 mt-4">
+      {% block conteudo %}
+
+      {% endblock %}
+    </div>
+
+    <footer class="py-3 bg-dark text-white text-center mt-5">
+      <div class="container">
+        <small>Copyright &copy; Sistema de Gestão de Demandas — Suporte TI - Setor Público &bull; 2026</small>
+      </div>
+    </footer>
+    {% block scripts %}
+
+    {% endblock %}
+  </body>
+</html>

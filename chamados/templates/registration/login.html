@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block aba %}
+  Acessar Sistema - TI
+{% endblock %}
+
+{% block conteudo %}
+  <div class="container mt-5" style="max-width: 450px;">
+    <div class="card shadow">
+      <div class="card-header text-white text-center" style="background-color: #008000;">
+        <h3 class="card-title h5 mb-0">🔑 Identificação do Usuário</h3>
+      </div>
+      <div class="card-body">
+        {% if form.errors %}
+          <div class="alert alert-danger py-2 small" role="alert">Usuário ou senha incorretos. Tente novamente.</div>
+        {% endif %}
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          {% for field in form %}
+            <div class="mb-3">
+              <label class="form-label fw-bold">{{ field.label }}</label>
+              <div class="form-control-container">
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+                    var el = document.getElementsByName('{{ field.name }}')[0]
+                    if (el) el.classList.add('form-control')
+                  })
+                </script>
+                {{ field }}
+              </div>
+            </div>
+          {% endfor %}
+
+          <button type="submit" class="btn btn-success w-100 fw-bold mt-3">Entrar no Sistema</button>
+          <div class="text-center mt-3">
+            <hr />
+            <p class="mb-1 text-muted small">Novo por aqui?</p>
+            <a href="{% url 'cadastrar_usuario' %}" class="btn btn-outline-secondary btn-sm w-100">Criar uma Conta de Usuário</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

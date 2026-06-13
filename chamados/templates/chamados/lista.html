@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block aba %}
+    Painel de Chamados - TI
+{% endblock %}
+
+{% block conteudo %}
+
+<div class="card bg-light mb-4 shadow-sm">
+    <div class="card-body py-2">
+        <form method="get" class="row g-2 align-items-center">
+            <div class="col-md-3">
+                <select name="status" class="form-select form-select-sm">
+                    <option value="">-- Filtrar por Status --</option>
+                    {% for valor, nome in status_choices %}
+                        <option value="{{ valor }}" {% if filtro_status == valor %}selected{% endif %}>{{ nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="prioridade" class="form-select form-select-sm">
+                    <option value="">-- Filtrar por Prioridade --</option>
+                    {% for valor, nome in prioridades %}
+                        <option value="{{ valor }}" {% if filtro_prioridade == valor %}selected{% endif %}>{{ nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="categoria" class="form-select form-select-sm">
+                    <option value="">-- Filtrar por Categoria --</option>
+                    {% for valor, nome in categorias %}
+                        <option value="{{ valor }}" {% if filtro_categoria == valor %}selected{% endif %}>{{ nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3 d-flex gap-1">
+                <button type="submit" class="btn btn-sm btn-dark w-100">Filtrar</button>
+                <a href="{% url 'home' %}" class="btn btn-sm btn-outline-secondary w-100">Limpar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h4">Gerenciamento de Ordens de Serviço (OS)</h2>
+        <a href="{% url 'novo_chamado' %}" class="btn btn-success fw-bold">+ Abrir Chamado</a>
+    </div>
+
+    <div class="mb-3">
+        <div class="btn-group btn-group-sm">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary {% if not filtro_status %}active{% endif %}">Todos</a>
+            <a href="?status=aberto" class="btn btn-outline-warning {% if filtro_status == 'aberto' %}active{% endif %}">Abertos</a>
+            <a href="?status=atendimento" class="btn btn-outline-primary {% if filtro_status == 'atendimento' %}active{% endif %}">Em Atendimento</a>
+            <a href="?status=resolvido" class="btn btn-outline-success {% if filtro_status == 'resolvido' %}active{% endif %}">Resolvidos</a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-5">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>OS</th>
+                        <th>Servidor / Setor</th>
+                        <th>Categoria</th>
+                        <th>Prioridade</th>
+                        <th>Status</th>
+                        <th>Abertura</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for chamado in chamados %}
+                    <tr>
+                        <td><strong>#{{ chamado.id }}</strong></td>
+                        <td>
+                            <div>{{ chamado.servidor_nome }}</div>
+                            <small class="text-muted">{{ chamado.setor }}</small>
+                        </td>
+                        <td>{{ chamado.get_categoria_display }}</td>
+                        <td>
+                            {% if chamado.prioridade == 'alta' %}
+                                <span class="badge bg-danger">Alta</span>
+                            {% elif chamado.prioridade == 'media' %}
+                                <span class="badge bg-warning text-dark">Média</span>
+                            {% else %}
+                                <span class="badge bg-info text-dark">Baixa</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if chamado.status == 'resolvido' %}
+                                <span class="badge bg-success">Resolvido</span>
+                            {% elif chamado.status == 'atendimento' %}
+                                <span class="badge bg-primary">Em Atendimento</span>
+                            {% elif chamado.status == 'cancelado' %}
+                                <span class="badge bg-secondary">Cancelado</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">Aberto</span>
+                            {% endif %}
+                        </td>
+                        <td><small>{{ chamado.criado_em|date:"d/m/Y H:i" }}</small></td>
+                        <td>
+                            <a href="{% url 'atualizar_chamado' chamado.id %}" class="btn btn-sm btn-outline-dark">
+                                Atender / Detalhes
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">Nenhum chamado encontrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

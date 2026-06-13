@@ -1,4 +1,4 @@
-# 🏛️ Sistema de Gestão de Demandas — Suporte TI
+# 🏛️ Sistema de Gestão de Demandas — Suporte GTI
 
 Sistema web em estilo CRUD desenvolvido para o gerenciamento de chamados técnicos no setor público.
 

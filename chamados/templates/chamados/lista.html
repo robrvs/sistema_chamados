@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block aba %}
-    Painel de Chamados - TI
+    Painel de Chamados - GTI
 {% endblock %}
 
 {% block conteudo %}
@@ -44,7 +44,7 @@
 
 <div class="mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="h4">Gerenciamento de Ordens de Serviço (OS)</h2>
+        <h2 class="h4">Gerenciamento de Demandas</h2>
         <a href="{% url 'novo_chamado' %}" class="btn btn-success fw-bold">+ Abrir Chamado</a>
     </div>
 
@@ -64,10 +64,10 @@
                     <tr>
                         <th>OS</th>
                         <th>Servidor / Setor</th>
-                        <th>Categoria</th>
+                        <th>Abertura</th>
                         <th>Prioridade</th>
                         <th>Status</th>
-                        <th>Abertura</th>
+                        <th>Categoria</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -79,6 +79,7 @@
                             <div>{{ chamado.servidor_nome }}</div>
                             <small class="text-muted">{{ chamado.setor }}</small>
                         </td>
+                        <td><small>{{ chamado.criado_em|date:"d/m/Y H:i" }}</small></td>
                         <td>{{ chamado.get_categoria_display }}</td>
                         <td>
                             {% if chamado.prioridade == 'alta' %}
@@ -100,7 +101,7 @@
                                 <span class="badge bg-warning text-dark">Aberto</span>
                             {% endif %}
                         </td>
-                        <td><small>{{ chamado.criado_em|date:"d/m/Y H:i" }}</small></td>
+                        {% comment %} <td><small>{{ chamado.criado_em|date:"d/m/Y H:i" }}</small></td> {% endcomment %}
                         <td>
                             <a href="{% url 'atualizar_chamado' chamado.id %}" class="btn btn-sm btn-outline-dark">
                                 Atender / Detalhes

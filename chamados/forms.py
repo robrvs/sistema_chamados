@@ -1,7 +1,6 @@
 from django import forms
 from .models import Chamado, Comentario
 
-# Register your forms here.
 class ChamadoForm(forms.ModelForm):
     class Meta:
         model = Chamado

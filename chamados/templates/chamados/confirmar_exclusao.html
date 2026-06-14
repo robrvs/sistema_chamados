@@ -11,7 +11,7 @@
             <h3 class="card-title h5 mb-0">⚠️ Confirmar Exclusão</h3>
         </div>
         <div class="card-body text-center">
-            <p class="fs-5">Tem certeza que deseja apagar permanentemente a Ordem de Serviço abaixo?</p>
+            <p class="fs-5">Tem certeza que deseja apagar a Ordem de Serviço abaixo?</p>
             
             <div class="alert alert-light border my-3 text-start">
                 <strong>OS:</strong> #{{ chamado.id }}<br>
@@ -23,7 +23,7 @@
                 {% csrf_token %}
                 <div class="d-flex justify-content-around mt-4">
                     <a href="{% url 'atualizar_chamado' chamado.id %}" class="btn btn-light border">Cancelar</a>
-                    <button type="submit" class="btn btn-danger fw-bold">Sim, Deletar Permanentemente</button>
+                    <button type="submit" class="btn btn-danger fw-bold">Sim, Deletar</button>
                 </div>
             </form>
         </div>

@@ -17,7 +17,6 @@ def lista_chamados(request):
     filtro_prioridade = request.GET.get('prioridade')
     filtro_categoria = request.GET.get('categoria')
     
-    # Aplica os filtros dinamicamente se eles forem selecionados
     if filtro_status:
         chamados = chamados.filter(status=filtro_status)
     if filtro_prioridade:
@@ -30,7 +29,6 @@ def lista_chamados(request):
         'filtro_status': filtro_status,
         'filtro_prioridade': filtro_prioridade,
         'filtro_categoria': filtro_categoria,
-        # Passamos as listas para gerar os selects dinamicamente no HTML
         'categorias': Chamado.CATEGORIAS,
         'prioridades': Chamado.PRIORIDADES,
         'status_choices': Chamado.STATUS_CHOICES,
@@ -42,10 +40,10 @@ def novo_chamado(request):
         form = ChamadoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')  # <-- Alterado aqui de 'lista_chamados' para 'home'
+            return redirect('home') 
     else:
         form = ChamadoForm()
-    return render(request, 'chamados/novo.html', {'form': form, 'titulo': 'Abrir Chamado'})
+    return render(request, 'chamados/novo.html', {'form': form, 'titulo': '📝 Abrir Chamado'})
 
 def atualizar_chamado(request, pk):
     chamado = get_object_or_404(Chamado, pk=pk)
@@ -53,7 +51,7 @@ def atualizar_chamado(request, pk):
         form = StatusForm(request.POST, instance=chamado)
         if form.is_valid():
             form.save()
-            return redirect('home')  # <-- Alterado aqui de 'lista_chamados' para 'home'
+            return redirect('home')  
     else:
         form = StatusForm(instance=chamado)
     return render(request, 'chamados/novo.html', {'form': form, 'titulo': f'Atualizar OS #{chamado.id}', 'chamado': chamado})
@@ -71,7 +69,7 @@ def cadastrar_usuario(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')  # Redireciona para o login após cadastrar
+            return redirect('login')  
     else:
         form = UserCreationForm()
     return render(request, 'registration/cadastro.html', {'form': form, 'titulo': 'Cadastro de Novo Usuário'})

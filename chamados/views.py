@@ -12,7 +12,6 @@ StatusForm = modelform_factory(Chamado, fields=['status', 'observacao_tecnica'])
 def lista_chamados(request):
     chamados = Chamado.objects.all()
     
-    # Captura os parâmetros de filtro da URL
     filtro_status = request.GET.get('status')
     filtro_prioridade = request.GET.get('prioridade')
     filtro_categoria = request.GET.get('categoria')
@@ -54,10 +53,9 @@ def atualizar_chamado(request, pk):
             return redirect('home')  
     else:
         form = StatusForm(instance=chamado)
-    return render(request, 'chamados/novo.html', {'form': form, 'titulo': f'Atualizar OS #{chamado.id}', 'chamado': chamado})
+    return render(request, 'chamados/novo.html', {'form': form, 'titulo': f'Atualizar demanda #{chamado.id}', 'chamado': chamado})
 
 def deletar_chamado(request, pk):
-    # DELETE do CRUD
     chamado = get_object_or_404(Chamado, pk=pk)
     if request.method == 'POST':
         chamado.delete()

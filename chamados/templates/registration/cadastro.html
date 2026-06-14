@@ -36,8 +36,8 @@
                         
                         {% if field.help_text %}
                             <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">
-                                {% if "Required. 150 characters or fewer." in field.help_text %}
-                                    Obrigatório. 150 caracteres ou menos. Letras, números e os caracteres @/./+/-/_ apenas.
+                                {% if "Required. 20 characters or fewer." in field.help_text %}
+                                    Obrigatório.  caracteres ou menos. Letras, números e os caracteres @/./+/-/_ apenas.
                                 {% elif "Your password can’t be too similar to your other personal information." in field.help_text %}
                                     A sua senha não pode ser muito parecida com as suas outras informações pessoais.<br>
                                     A sua senha deve conter pelo menos 8 caracteres.<br>
